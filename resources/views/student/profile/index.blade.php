@@ -1,29 +1,34 @@
 @extends('layouts.app')
+
 @section('title', 'Profilim')
 
 @section('content')
+<div class="container text-center">
+    <div class="card shadow p-4" style="max-width: 500px; margin: 0 auto;">
+        <div class="mb-3">
+        <img src="{{ auth()->user()->student->profile_photo 
+             ? asset('storage/' . auth()->user()->student->profile_photo) 
+             : asset('images/default-image.jpg') }}" 
+     alt="{{ auth()->user()->name }}'nin Profil Fotoğrafı" 
+     class="rounded-circle" 
+     style="width: 100px; height: 100px;">
 
-<div class="d-flex align-items-center justify-content-between mb-4">
-    <h2 class="mb-0">@if($student->profile_photo)
-        <img 
-            src="{{ $student->profile_photo }}" 
-            alt="Profil Fotoğrafı" 
-            style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; border: 1px solid #ccc;">
-    @else
-        <img 
-            src="{{ asset('images/default-avatar.png') }}" 
-            alt="Varsayılan Fotoğraf" 
-            style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; border: 1px solid #ccc;">
-    @endif Profilim</h2>
-    
-    
+                 
+        </div>
+        <h4 class="mb-1">{{ $user->name }}</h4>
+        <p class="text-muted">{{ $user->email }}</p>
+
+        <hr>
+
+        <div class="text-start">
+            <p><strong>Öğrenci No:</strong> {{ $student->student_number }}</p>
+            <p><strong>Bölüm:</strong> {{ $student->department->name }}</p>
+            <p><strong>Sınıf:</strong> {{ $student->class }}</p>
+        </div>
+
+        <a href="{{ route('student.profile.edit') }}" class="btn btn-primary w-100 mt-3">
+            <i class="fas fa-edit me-1"></i> Profili Güncelle
+        </a>
+    </div>
 </div>
-
-<p><strong>Ad Soyad:</strong> {{ Auth::user()->name }}</p>
-<p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-<p><strong>Öğrenci No:</strong> {{ $student->student_number }}</p>
-<p><strong>Bölüm:</strong> {{ $student->department->name ?? '-' }}</p>
-<p><strong>Sınıf:</strong> {{ $student->class }}</p>
-
-<a href="{{ route('student.profile.edit') }}" class="btn btn-primary mt-3">Profili Güncelle</a>
 @endsection

@@ -34,6 +34,12 @@ Route::middleware(['auth'])->prefix('student')->group(function () {
     Route::get('/dashboard', function () {
         return view('student.dashboard');
     })->name('student.dashboard');
+    // Tüm şirketlerle sohbet listesi ve seçilen şirketle detaylı chat
+Route::get('/messages', [MessageController::class, 'index'])->name('student.messages.index');
+Route::get('/messages/{company_id}', [MessageController::class, 'chat'])->name('student.messages.chat');
+Route::post('/messages/send', [MessageController::class, 'send'])->name('student.messages.send');
+
+    
     Route::delete('/applications/{id}', [ApplicationController::class, 'destroy'])->name('student.applications.destroy');
 
     Route::get('/internships', [InternshipController::class, 'index'])->name('student.internships.index');
