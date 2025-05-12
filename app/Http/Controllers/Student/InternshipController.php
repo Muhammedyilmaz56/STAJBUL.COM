@@ -12,4 +12,10 @@ class InternshipController extends Controller
         $postings = InternshipPosting::where('is_approved', true)->latest()->get();
         return view('student.internships.index', compact('postings'));
     }
+    public function show($id)
+{
+    $posting = \App\Models\InternshipPosting::findOrFail($id);
+    return view('student.internships.show', compact('posting'));
+}
+
 }

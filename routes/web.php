@@ -34,16 +34,22 @@ Route::middleware(['auth'])->prefix('student')->group(function () {
     Route::get('/dashboard', function () {
         return view('student.dashboard');
     })->name('student.dashboard');
+    Route::delete('/applications/{id}', [ApplicationController::class, 'destroy'])->name('student.applications.destroy');
 
     Route::get('/internships', [InternshipController::class, 'index'])->name('student.internships.index');
+    Route::get('/internships/{id}', [InternshipController::class, 'show'])->name('student.internships.show');
+    Route::post('/internships/{id}/apply', [ApplicationController::class, 'store'])->name('student.internships.apply');
+
     Route::get('/applications', [ApplicationController::class, 'index'])->name('student.applications.index');
     Route::get('/messages', [MessageController::class, 'index'])->name('student.messages.index');
     Route::get('/history', [HistoryController::class, 'index'])->name('student.history.index');
     Route::get('/profile', [ProfileController::class, 'index'])->name('student.profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('student.profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('student.profile.update');
-    
 });
+
+    
+
 
 
 
@@ -51,3 +57,5 @@ Route::middleware(['auth'])->prefix('student')->group(function () {
 Route::get('/', function () {
     return view('welcome');
 });
+
+
