@@ -52,6 +52,10 @@ Route::post('/messages/send', [MessageController::class, 'send'])->name('student
     Route::get('/profile', [ProfileController::class, 'index'])->name('student.profile');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('student.profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('student.profile.update');
+    Route::get('/active-internship', [InternshipController::class, 'active'])
+    ->name('student.internship.active');
+    Route::post('/applications/{id}/confirm', [App\Http\Controllers\Student\ApplicationController::class, 'confirmAccepted'])->name('applications.confirm');
+
 });
 
     
@@ -61,7 +65,7 @@ Route::post('/messages/send', [MessageController::class, 'send'])->name('student
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 

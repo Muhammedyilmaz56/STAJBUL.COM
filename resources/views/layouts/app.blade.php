@@ -13,64 +13,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/internship-detail.css') }}">
 <script src="{{ asset('js/internship-detail.js') }}" defer></script>
-
-
-    <style>
-        body {
-            background-color: #f2f4f8;
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding-top: 70px;
-        }
-
-            .navbar {
-    background: linear-gradient(90deg, #2563eb 0%, #4f46e5 100%);
-}
-
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 20px;
-            color: white !important;
-        }
-
-        .nav-link {
-            color: white !important;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover {
-            opacity: 1;
-    text-decoration: underline;
-        }
-
-        .container {
-            max-width: 1200px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #666;
-        }
-    </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/student.js') }}" defer></script>
+  
 </head>
 <body>
 
     <!-- Navbar -->
-    <a class="navbar-brand d-flex align-items-center" href="{{ url('/student/dashboard') }}">
-    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="stajbul-logo me-2">
-</a>
+  
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark py-3">
         <div class="container">
  
 
-
+        <a class="navbar-brand d-flex align-items-center" href="{{ url('/student/dashboard') }}">
+    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="stajbul-logo me-2">
+</a>
 
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -92,7 +50,7 @@
                     @endauth
 
                     @guest
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login.form') }}">Giriş</a></li>
+                      
                         <li class="nav-item"><a class="nav-link" href="{{ route('register.student.form') }}">Öğrenci Kayıt</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('register.company.form') }}">Şirket Kayıt</a></li>
                     @endguest
