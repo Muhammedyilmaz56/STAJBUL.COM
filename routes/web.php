@@ -9,6 +9,12 @@ use App\Http\Controllers\Student\ApplicationController;
 use App\Http\Controllers\Student\MessageController;
 use App\Http\Controllers\Student\HistoryController;
 use App\Http\Controllers\Student\ProfileController;
+// Şirket
+use App\Http\Controllers\Company\InternshipController as CompanyInternshipController;
+use App\Http\Controllers\Company\ApplicationController as CompanyApplicationController;
+use App\Http\Controllers\Company\InternController as CompanyInternController;
+use App\Http\Controllers\Company\ProfileController as CompanyProfileController;
+use App\Http\Controllers\Company\MessageController as CompanyMessageController;
 
 
 // Giriş
@@ -54,11 +60,50 @@ Route::post('/messages/send', [MessageController::class, 'send'])->name('student
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('student.profile.update');
     Route::get('/active-internship', [InternshipController::class, 'active'])
     ->name('student.internship.active');
-    Route::post('/applications/{id}/confirm', [App\Http\Controllers\Student\ApplicationController::class, 'confirmAccepted'])->name('applications.confirm');
+    Route::post('/applications/{id}/confirm', [ApplicationController::class, 'confirmAccepted'])->name('applications.confirm');
 
 });
 
-    
+Route::middleware(['auth'])->prefix('company')->group(function () {
+    Route::get('/dashboard', fn () => view('company.dashboard'))->name('company.dashboard');
+
+    // İlanlar
+    Route::get('/internships', [CompanyInternshipController::class, 'index'])->name('company.internships.index');
+    Route::get('/internships/create', [CompanyInternshipController::class, 'create'])->name('company.internships.create');
+    Route::post('/internships', [CompanyInternshipController::class, 'store'])->name('company.internships.store');
+    Route::get('/internships/{id}/edit', [CompanyInternshipController::class, 'edit'])->name('company.internships.edit');
+    Route::put('/internships/{id}', [CompanyInternshipController::class, 'update'])->name('company.internships.update');
+    Route::delete('/internships/{id}', [CompanyInternshipController::class, 'destroy'])->name('company.internships.destroy');
+
+    // Başvurular
+    Route::get('/applications', [CompanyInternshipController::class, 'applications'])->name('company.applications.index');
+    Route::post('/applications/{id}/accept', [CompanyApplicationController::class, 'accept'])->name('company.applications.accept');
+    Route::post('/applications/{id}/reject', [CompanyApplicationController::class, 'reject'])->name('company.applications.reject');
+
+    // Profil
+    Route::get('/profile/edit', [CompanyProfileController::class, 'edit'])->name('company.profile.edit');
+    Route::post('/profile/update', [CompanyProfileController::class, 'update'])->name('company.profile.update');
+
+    // Stajyerler
+    Route::get('/interns', [CompanyInternController::class, 'index'])->name('company.interns.index');
+
+    // Staj bitirme işlemi
+    Route::get('/internships/complete/{application}', [CompanyInternshipController::class, 'completeForm'])->name('company.internships.complete');
+    Route::post('/internships/complete/{application}', [CompanyInternshipController::class, 'storeCompletion'])->name('company.internships.complete.store'); // 🔧 düzeltildi
+
+    // Tamamlanan stajlar
+    Route::get('/internships/completed', [CompanyInternshipController::class, 'completed'])->name('company.internships.completed');
+
+    //mesajlar 
+    Route::get('/messages', [CompanyMessageController::class, 'index'])->name('company.messages.index');
+    Route::get('/messages/{student_id}', [CompanyMessageController::class, 'chat'])->name('company.messages.chat');
+    Route::post('/messages/send', [CompanyMessageController::class, 'send'])->name('company.messages.send');
+    Route::post('/company/messages/fetch', [CompanyMessageController::class, 'fetchMessages'])->name('company.messages.fetch');
+
+
+
+
+});  
 
 
 
