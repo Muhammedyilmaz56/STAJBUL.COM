@@ -86,4 +86,30 @@ class ApplicationController extends Controller
 
         return redirect()->route('student.internships.index')->with('success', 'Stajınız başlatıldı.');
     }
+    public function confirm($id)
+{
+    $student = auth()->user()->student;
+
+    $application = \App\Models\Application::with('internshipPosting')
+        ->where('id', $id)
+        ->where('student_id', $student->id)
+        ->where('status', 'accepted')
+        ->firstOrFail();
+
+    if ($student->internships()->whereNull('end_date')->exists()) {
+        return redirect()->back()->with('error', 'Zaten aktif bir stajınız var.');
+    }
+
+    \App\Models\Internship::create([
+        'student_id' => $student->id,
+        'company_id' => $application->internshipPosting->company_id,
+        'start_date' => now(),
+    ]);
+
+    $application->status = 'confirmed';
+    $application->save();
+
+    return redirect()->route('student.internships.index')->with('success', 'Stajınız başarıyla başlatıldı.');
+}
+
 }

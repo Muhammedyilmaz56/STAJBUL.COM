@@ -10,40 +10,33 @@
         @endphp
 
         @if ($logo)
-            <img src="{{ $logo }}" alt="Logo" style="height: 60px; object-fit: contain;" class="mb-3">
+            <img src="{{ $logo }}" alt="Logo" style="height: 80px; object-fit: contain;" class="mb-3">
         @endif
         <br>
         {{ Auth::user()->company->company_name }}
     </h2>
 </div>
 
-<div class="d-flex flex-wrap justify-content-center gap-4">
-    <a href="{{ route('company.internships.create') }}" class="btn btn-lg btn-gradient text-center">
-        <i class="fa fa-plus mb-2"></i><br>İlan Oluştur
-    </a>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+    @php
+        $items = [
+            ['route' => 'company.internships.create', 'icon' => 'fa-plus', 'text' => 'İlan Oluştur'],
+            ['route' => 'company.internships.index', 'icon' => 'fa-list', 'text' => 'İlanlarım'],
+            ['route' => 'company.applications.index', 'icon' => 'fa-file-alt', 'text' => 'Başvurular'],
+            ['route' => 'company.interns.index', 'icon' => 'fa-users', 'text' => 'Stajyerler'],
+            ['route' => 'company.internships.completed', 'icon' => 'fa-check-circle', 'text' => 'Tamamlanan Stajlar'],
+            ['route' => 'company.messages.index', 'icon' => 'fa-envelope', 'text' => 'Mesajlar'],
+            ['route' => 'company.profile.edit', 'icon' => 'fa-pen', 'text' => 'Profili Düzenle'],
+        ];
+    @endphp
 
-    <a href="{{ route('company.internships.index') }}" class="btn btn-lg btn-gradient text-center">
-        <i class="fa fa-list mb-2"></i><br>İlanlarım
-    </a>
-
-    <a href="{{ route('company.applications.index') }}" class="btn btn-lg btn-gradient text-center">
-        <i class="fa fa-file-alt mb-2"></i><br>Başvurular
-    </a>
-
-    <a href="{{ route('company.interns.index') }}" class="btn btn-lg btn-gradient text-center">
-        <i class="fa fa-users mb-2"></i><br>Stajyerler
-    </a>
-
-    <a href="{{ route('company.internships.completed') }}" class="btn btn-lg btn-gradient text-center">
-        <i class="fa fa-check-circle mb-2"></i><br>Tamamlanan Stajlar
-    </a>
-
-    <a href="{{ route('company.messages.index') }}" class="btn btn-lg btn-gradient text-center">
-        <i class="fa fa-envelope mb-2"></i><br>Mesajlar
-    </a>
-
-    <a href="{{ route('company.profile.edit') }}" class="btn btn-lg btn-gradient text-center">
-        <i class="fa fa-pen mb-2"></i><br>Profili Düzenle
-    </a>
+    @foreach ($items as $item)
+        <div class="col">
+            <a href="{{ route($item['route']) }}" class="btn btn-gradient btn-lg w-100 text-center py-4 shadow-sm d-flex flex-column align-items-center justify-content-center h-100">
+                <i class="fa {{ $item['icon'] }} fa-2x mb-2"></i>
+                <span class="fw-semibold">{{ $item['text'] }}</span>
+            </a>
+        </div>
+    @endforeach
 </div>
 @endsection

@@ -45,6 +45,10 @@
                                     @case('rejected')
                                         <span class="badge bg-danger">Reddedildi</span>
                                         @break
+                                        @case('confirmed')
+    <span class="badge bg-primary">Staj Başladı</span>
+    @break
+
                                 @endswitch
                             </td>
                             <td>{{ $application->created_at->format('d.m.Y H:i') }}</td>

@@ -67,7 +67,7 @@
     </nav>
 
     <!-- İçerik -->
-    <div class="container mt-4">
+    <div class="container"style="padding-top: 100px;">
         @yield('content')
     </div>
 
